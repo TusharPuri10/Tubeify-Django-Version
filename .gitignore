@@ -8,6 +8,8 @@ media
 # Environments 
 .env 
 .venv 
+.tubeifyenv
+tubeify/
 env/ 
 venv/ 
 ENV/ 
