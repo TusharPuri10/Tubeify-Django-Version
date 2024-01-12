@@ -11,16 +11,14 @@ import openai
 import textwrap
 from transformers import pipeline
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 @api_view(['GET'])
 def say_hello(request):
     return JsonResponse({'message': 'Hello from Django!'})
 
 
-def generate_transcript_text(link=""):
-    # Specify the YouTube video URL
-    youtube_url = "https://www.youtube.com/watch?v=b9rs8yzpGYk"
-
+def generate_transcript_text(youtube_url="https://www.youtube.com/watch?v=b9rs8yzpGYk"):
     # Extract the video ID from the URL using regular expressions
     match = re.search(r"v=([A-Za-z0-9_-]+)", youtube_url)
     if match:
@@ -42,13 +40,16 @@ def generate_transcript_text(link=""):
 def split_text_into_chunks(text, max_chunk_size):
     return textwrap.wrap(text, max_chunk_size)
 
-@api_view(['GET'])
+@csrf_exempt
+@api_view(['GET','POST'])
 def generate_summary(request):
-    transcript_text = generate_transcript_text()
+    data = json.loads(request.body)
+    ytlink = data.get('ytlink')
+    print("YouTube link:", ytlink)
+    transcript_text = generate_transcript_text(ytlink)
     # Instantiate the tokenizer and the summarization pipeline
     tokenizer = AutoTokenizer.from_pretrained('stevhliu/my_awesome_billsum_model')
     summarizer = pipeline("summarization", model='stevhliu/my_awesome_billsum_model', tokenizer=tokenizer)
-
     # Define chunk size in number of words
     chunk_size = 200 # you may need to adjust this value depending on the average length of your words
 
@@ -98,10 +99,12 @@ def format_quiz_questions(quiz_questions):
         questions.append(question)
     return questions
 
-
-@api_view(['GET'])
+@csrf_exempt
+@api_view(['GET','POST'])
 def generate_quiz(request):
-    transcript_text = generate_transcript_text()
+    data = json.loads(request.body)
+    ytlink = data.get('ytlink')
+    transcript_text = generate_transcript_text(ytlink)
     openai.api_key = "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"
     max_chunk_size = 20
 

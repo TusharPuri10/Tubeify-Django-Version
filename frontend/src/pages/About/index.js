@@ -52,7 +52,7 @@ const AboutPage = () => {
   </Paragraph>
 
   <Paragraph>
-    Akash Dogra's adept development of this machine learning model forms a strong foundation for the DDoS Analyser, providing not only high accuracy but also reliability and real-world applicability.
+    Akash Dogra's adept development of this machine learning model forms a strong foundation for the TUBEIFY, providing not only high accuracy but also reliability and real-world applicability.
   </Paragraph>
 
   <Paragraph>
@@ -116,7 +116,7 @@ const AboutPage = () => {
   </Paragraph>
 
   <Paragraph>
-    These frontend steps, led by Vishwas Malik, contribute to the polished user interface and interactive experience of our DDoS Analyser. His expertise with React, Material UI, Apex Charts, React Router DOM, and React Redux enriches the user's journey through our application.
+    These frontend steps, led by Vishwas Malik, contribute to the polished user interface and interactive experience of our TUBEIFY. His expertise with React, Material UI, Apex Charts, React Router DOM, and React Redux enriches the user's journey through our application.
   </Paragraph>
 
   <Paragraph>
@@ -142,7 +142,7 @@ const AboutPage = () => {
   </Paragraph>
 
   <Paragraph>
-    Shubham Rana's expertise in deploying our DDoS Analyser, employing Elastic Beanstalk and Elastic Container Registry, reinforces the stability and scalability of our application.
+    Shubham Rana's expertise in deploying our TUBEIFY, employing Elastic Beanstalk and Elastic Container Registry, reinforces the stability and scalability of our application.
   </Paragraph>
 </AboutContainer>
 

@@ -21,6 +21,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import Drawer from "./Drawer";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import yticon from "../assets/yticon.png";
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -218,19 +219,28 @@ const SearchBar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component={Link}
-                        to="/"
-                        sx={{
-                            display: { xs: "none", sm: "block" },
-                            textDecoration: "none",
-                            color: "inherit",
-                        }}
-                    >
-                        DDoS WATCHER
-                    </Typography>
+                    
+                    <Box sx={{display:"flex",pl:1, justifyContent:"center", alignItems:"center"}}>
+                        <img 
+                            src={yticon} 
+                            alt="icon" 
+                            style={{ width: 30, height: 30, marginRight: 10 }} 
+                        />
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component={Link}
+                            to="/"
+                            sx={{
+                                display: { xs: "none", sm: "block" },
+                                textDecoration: "none",
+                                color: "inherit",
+                                fontFamily: 'fantasy',
+                            }}
+                        >
+                            TUBEIFY
+                        </Typography>
+                    </Box>
                     {/* <Search>
                         <SearchIconWrapper>
                             <SearchIcon />

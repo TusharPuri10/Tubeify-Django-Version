@@ -14,8 +14,8 @@ export default function Footer() {
                 padding: theme.spacing(6),
             }}
         >
-            <Typography variant="h6" align="center" gutterBottom color="white">
-                DDoS WATCHER
+            <Typography variant="h6" align="center" gutterBottom color="white" sx={{fontFamily: 'fantasy',}}>
+                TUBEIFY
             </Typography>
 
             <Box display="flex" justifyContent="center" m={1} p={1}>
@@ -36,7 +36,7 @@ export default function Footer() {
                             backgroundColor: "white",
                         },
                     }}
-                    href="https://github.com/TusharPuri10/DDOSwatcher"
+                    href="https://github.com/TusharPuri10/Tubeify"
                     target="_blank"
                     rel="noopener"
                     startIcon={<GitHub />}

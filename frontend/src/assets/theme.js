@@ -5,26 +5,25 @@ export const theme = (mode) =>
         palette: {
             mode: mode,
             background: {
-                default: mode === "dark" ? "#1b4332" : "#fff",
-                paper: mode === "dark" ? "#081c15" : "#fff",
-                contrast: mode === "dark" ? "#081c15" : "#40916c",
+                default: mode === "dark" ? "#0B090A" : "#fff",
+                paper: mode === "dark" ? "#0B090A" : "#fff",
+                contrast: mode === "dark" ? "#161A1D" : "#E5383B",
             },
             text: {
                 primary: mode === "dark" ? "#fff" : "#212121",
-                secondary:
-                    mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#2f2f2f",
+                secondary:mode === "dark" ? "rgba(255, 255, 255, 0.7)" : "#2f2f2f",
                 disabled: "rgba(255, 255, 255, 0.5)",
             },
             primary: {
-                main: "#40916c  ",
-                light: "#74c69d",
-                dark: "#40916c",
+                main: "#A4161A  ",
+                light: "#fca5a5",
+                dark: "#660708",
                 contrastText: "#fff",
             },
             secondary: {
-                main: "#ffea00",
-                light: "#FFEE33",
-                dark: "#B2A300",
+                main: "#A4161A",
+                light: "#E5383B",
+                dark: "#660708",
                 contrastText: "rgba(0, 0, 0, 0.87)",
             },
             error: {

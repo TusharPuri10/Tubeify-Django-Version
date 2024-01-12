@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     console.log(state);
 
-    axios.defaults.baseURL = "http://localhost:5000";
+    axios.defaults.baseURL = "http://localhost:8000";
 
     axios.interceptors.response.use(
         function (response) {

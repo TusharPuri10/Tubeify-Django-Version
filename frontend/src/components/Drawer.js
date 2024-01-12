@@ -1,7 +1,7 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Box, Divider, IconButton } from "@mui/material";
+import { Box, Divider, IconButton, Image } from "@mui/material";
 import MUIDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -11,12 +11,12 @@ import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import { Link } from "react-router-dom";
+import yticon from "../assets/yticon.png";
 
 const drawerWidth = 240;
 
 const Drawer = ({ open, onClose }) => {
     const drawerRef = React.useRef(null);
-
     const getParent = () => drawerRef.current?.parentElement;
 
     return (
@@ -47,15 +47,25 @@ const Drawer = ({ open, onClose }) => {
             onKeyDown={onClose}
         >
             <Box display="flex" justifyContent="space-between">
-                <Typography
-                    variant="h6"
-                    noWrap
-                    sx={{
-                        p: 2,
-                    }}
-                >
-                    DDoS WATCHER
-                </Typography>
+                <Box sx={{display:"flex",pl:1, justifyContent:"center", alignItems:"center"}}>
+                    <img 
+                        src={yticon} 
+                        alt="icon" 
+                        style={{ width: 30, height: 30, marginRight: 10 }} 
+                    />
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        sx={{
+                            pr:2,
+                            py:2,
+                            fontFamily: 'fantasy',
+                        }}
+                    >
+                        TUBEIFY
+                    </Typography>
+                </Box>
+                
                 <IconButton
                     size="small"
                     edge="start"

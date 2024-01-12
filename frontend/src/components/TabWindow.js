@@ -3,6 +3,7 @@ import { AppBar, Tabs, Tab, Box } from "@mui/material";
 import Home from "../pages/Home";
 import Analyse from "../pages/Analyse";
 import About from "../pages/About";
+import Quiz from "../pages/Quiz";
 
 const tabStyle = {
     minWidth: { sm: 160 },
@@ -55,8 +56,9 @@ const TabWindow = () => {
                     allowScrollButtonsMobile
                 >
                     <Tab label="Home" value={0} sx={tabStyle} />
-                    <Tab label="DDoS Analyser" value={1} sx={tabStyle} />
-                    <Tab label="About" value={2} sx={tabStyle} />
+                    <Tab label="Summarizer" value={1} sx={tabStyle} />
+                    <Tab label="QUIZ" value={2} sx={tabStyle} />
+                    <Tab label="About" value={3} sx={tabStyle} />
                 </Tabs>
             </AppBar>
 
@@ -68,6 +70,9 @@ const TabWindow = () => {
                     <Analyse />
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2}>
+                    <Quiz />
+                </TabPanel>
+                <TabPanel value={tabIndex} index={3}>
                     <About/>
                 </TabPanel>
             </Box>
