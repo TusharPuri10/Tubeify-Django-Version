@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const Home = () => {
     useEffect(() => {
-        document.title = "Home";
+        document.title = "Tubeify";
     }, []);
 
     return (

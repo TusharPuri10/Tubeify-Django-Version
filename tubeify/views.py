@@ -56,15 +56,15 @@ def generate_summary(request):
     summaries = []
     for chunk in chunks:
         summary = summarizer(chunk, max_length=100, min_length=30, do_sample=False)
-        # summary_text = summary[0]['summary_text']
-        summary_text = summary[0]['generated_text']
+        print(summary,"<><><><><<><><><><")
+        summary_text = summary[0]['summary_text']
+        # summary_text = summary[0]['generated_text']
         summaries.append(summary_text)
 
     final_summary = ' '.join(summaries)
 
     print('--------------',final_summary,'------------------')
     return JsonResponse({'message': final_summary})
-
 
 def format_quiz_questions(quiz_questions):
     lines = quiz_questions.split("\n")
@@ -80,7 +80,7 @@ def format_quiz_questions(quiz_questions):
                 'question': line,
                 'choices': []
             }
-        elif re.match(r'\s*\$?[a-d]\)', line):
+        elif re.match(r'[a-d]\)', line):
             question['choices'].append(line)
 
     if question:

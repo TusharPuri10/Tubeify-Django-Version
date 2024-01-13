@@ -7,6 +7,8 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { useTheme } from "@mui/material/";
 import quizbg from "../../assets/quizbg.png";
 import Questions from "./Questions";
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 const Quiz = () => {
     const [questions, setQuestions] = useState([]);
@@ -149,7 +151,7 @@ const Quiz = () => {
                     <Questions questions={questions} />
                 </Box>
                 :
-                <Box sx={{display: "flex", flexDirection:"column",justifyContent:"center", alignItems:"center", width:"60%",borderRadius:"10px", marginTop:"20px"}}>
+                !loading ? <Box sx={{display: "flex", flexDirection:"column",justifyContent:"center", alignItems:"center", width:"60%",borderRadius:"10px", marginTop:"20px"}}>
                     <Typography variant="h6" style={{color:"#808080", marginBottom:"10px"}}>
                         Enter the link and start the quiz !!!
                     </Typography>
@@ -162,9 +164,43 @@ const Quiz = () => {
                             height: 'auto',
                         }}
                     />
-                    {loading && <LinearProgress />}
+                </Box>:
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                        position: "relative",
+                        width: "60%",
+                    }}
+                >
+                    <Typography
+                            variant="p"
+                            style={{
+                                color: "#808080",
+                                marginTop: "20px",
+                            }}
+                        >
+                        Generating Quiz !!!
+                    </Typography>
+                    <CircularProgress
+                        sx={{ position: "absolute", zIndex: 1 }}
+                    />
+                    <img
+                        src={quizbg}
+                        alt="icon"
+                        style={{
+                            // filter: "drop-shadow(0 0 1px #E5383B) drop-shadow(0 0 2px #E5383B) drop-shadow(0 0 3px #E5383B) drop-shadow(0 0 4px #E5383B)",
+                            width: "40%",
+                            height: "auto",
+                            opacity: "0.25",
+                            position: "relative",
+                            zIndex: 0,
+                        }}
+                    />
                 </Box>
-            }
+                }
         </Box>
     );
 };
