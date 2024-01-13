@@ -7,7 +7,9 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { useTheme } from "@mui/material/";
 import summarybg from "../../assets/summarybg.png";
 import YouTube from "react-youtube";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
+import IconButton from '@mui/material/IconButton';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 const Analyse = () => {
     const [summary, setSummary] = useState("");
@@ -115,15 +117,28 @@ const Analyse = () => {
                 }}
             >
                 {showSummaryBox ? (
-                    <Box sx={{display:"flex", flexDirection:"row", width:"90%"}}>
-                        <Box sx={{ boxShadow:
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            width: "90%",
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                boxShadow:
                                     "0 0 2px #B1A7A6, 0 0 4px #B1A7A6, 0 0 8px #B1A7A6, 0 0 10px #B1A7A6",
                                 margin: "60px 0px",
-                                width:"55%"}}>
-                            <YouTube videoId={videoId} opts={{
-                                // height: '100%',
-                                width: '100%'
-                            }} />
+                                width: "55%",
+                            }}
+                        >
+                            <YouTube
+                                videoId={videoId}
+                                opts={{
+                                    // height: '100%',
+                                    width: "100%",
+                                }}
+                            />
                         </Box>
                         <Box
                             sx={{
@@ -139,7 +154,7 @@ const Analyse = () => {
                                 bgcolor: theme.palette.background.contrast,
                             }}
                         >
-                            <Typography
+                            {/* <Typography
                                 variant="h4"
                                 sx={{
                                     marginBottom: "0px",
@@ -157,7 +172,42 @@ const Analyse = () => {
                                 }}
                             >
                                 Summary
-                            </Typography>
+                            </Typography> */}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    width: "100%",
+                                    backgroundColor:theme.palette.background.default,
+                                    borderBottom:"1px solid #808080",
+                                }}
+                            >
+                                <Typography
+                                    variant="h4"
+                                    sx={{
+                                        marginBottom: "0px",
+                                        marginTop: "0px",
+                                        fontSize: "30px",
+                                        fontWeight: "bold",
+                                        color: theme.palette.text.primary,
+                                        fontFamily: "fantasy",
+                                        textAlign: "center",
+                                        alignItems: "center",
+                                        width: "90%",
+                                        height: "50px",
+                                    }}
+                                >
+                                    Summary
+                                </Typography>
+                                <IconButton
+                                    onClick={() =>
+                                        navigator.clipboard.writeText(summary)
+                                    }
+                                >
+                                    <FileCopyIcon fontSize="small"/>
+                                </IconButton>
+                            </Box>
                             {loading ? (
                                 <Box
                                     sx={{
@@ -165,10 +215,12 @@ const Analyse = () => {
                                         justifyContent: "center",
                                         alignItems: "center",
                                         flexDirection: "column",
-                                        position: "relative", 
+                                        position: "relative",
                                     }}
                                 >
-                                    <CircularProgress sx={{ position: "absolute", zIndex: 1 }} /> 
+                                    <CircularProgress
+                                        sx={{ position: "absolute", zIndex: 1 }}
+                                    />
                                     <img
                                         src={summarybg}
                                         alt="icon"
@@ -181,8 +233,15 @@ const Analyse = () => {
                                             zIndex: 0,
                                         }}
                                     />
-                                    <Typography variant="p" style={{color:"#808080", marginBottom:"5px"}}>
-                                        Generating Summary, Till then enjoy watching video !!!
+                                    <Typography
+                                        variant="p"
+                                        style={{
+                                            color: "#808080",
+                                            marginBottom: "5px",
+                                        }}
+                                    >
+                                        Generating Summary, Till then enjoy
+                                        watching video !!!
                                     </Typography>
                                 </Box>
                             ) : (
@@ -190,7 +249,23 @@ const Analyse = () => {
                                     sx={{
                                         width: "100%",
                                         overflowY: "auto",
-                                        maxHeight: "200px",
+                                        height: "320px",
+                                        "&::-webkit-scrollbar": {
+                                            width: "5px",
+                                        },
+                                        "&::-webkit-scrollbar-track": {
+                                            background:
+                                                theme.palette.background
+                                                    .default,
+                                        },
+                                        "&::-webkit-scrollbar-thumb": {
+                                            background:
+                                                theme.palette.secondary.main,
+                                        },
+                                        "&::-webkit-scrollbar-thumb:hover": {
+                                            background:
+                                                theme.palette.secondary.dark,
+                                        },
                                     }}
                                 >
                                     <Typography
@@ -198,7 +273,7 @@ const Analyse = () => {
                                         sx={{
                                             marginBottom: "0px",
                                             fontSize: "15px",
-                                            fontWeight: "bold",
+                                            // fontWeight: "bold",
                                             color: theme.palette.text.primary,
                                             fontFamily: "fantasy",
                                             width: "100%",
@@ -212,8 +287,18 @@ const Analyse = () => {
                         </Box>
                     </Box>
                 ) : (
-                    <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
-                        <Typography variant="h6" style={{color:"#808080", marginTop:"20px"}}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <Typography
+                            variant="h6"
+                            style={{ color: "#808080", marginTop: "20px" }}
+                        >
                             Enter the link to generate summary !!!
                         </Typography>
                         <img
@@ -226,7 +311,6 @@ const Analyse = () => {
                             }}
                         />
                     </Box>
-                    
                 )}
             </Box>
         </Box>
