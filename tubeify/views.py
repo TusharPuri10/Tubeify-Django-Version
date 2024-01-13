@@ -19,21 +19,17 @@ def say_hello(request):
 
 
 def generate_transcript_text(youtube_url="https://www.youtube.com/watch?v=b9rs8yzpGYk"):
-    # Extract the video ID from the URL using regular expressions
     match = re.search(r"v=([A-Za-z0-9_-]+)", youtube_url)
     if match:
         video_id = match.group(1)
     else:
         raise ValueError("Invalid YouTube URL")
-
-    # Get the transcript from YouTube
+    
     transcript = YouTubeTranscriptApi.get_transcript(video_id)
 
-    # Concatenate the transcript into a single string
     transcript_text = ""
     for segment in transcript:
         transcript_text += segment["text"] + " "
-    # print(transcript_text)
     return transcript_text
 
 
@@ -47,30 +43,23 @@ def generate_summary(request):
     ytlink = data.get('ytlink')
     print("YouTube link:", ytlink)
     transcript_text = generate_transcript_text(ytlink)
-    # Instantiate the tokenizer and the summarization pipeline
-    tokenizer = AutoTokenizer.from_pretrained('stevhliu/my_awesome_billsum_model')
-    summarizer = pipeline("summarization", model='stevhliu/my_awesome_billsum_model', tokenizer=tokenizer)
-    # Define chunk size in number of words
-    chunk_size = 200 # you may need to adjust this value depending on the average length of your words
+    # tokenizer = AutoTokenizer.from_pretrained('stevhliu/my_awesome_billsum_model')
+    # summarizer = pipeline("summarization", model='stevhliu/my_awesome_billsum_model', tokenizer=tokenizer)
+    tokenizer = AutoTokenizer.from_pretrained('tusharpuri10/Flan_t5_podcast_summary_assessment')
+    summarizer = pipeline("summarization", model='tusharpuri10/Flan_t5_podcast_summary_assessment', tokenizer=tokenizer)
+    chunk_size = 200 
 
     print("transcrpt text: ", transcript_text)
-    # Split the text into chunks
     words = transcript_text.split()
     chunks = [' '.join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
 
-    # Summarize each chunk
     summaries = []
     for chunk in chunks:
-        # Summarize the chunk
         summary = summarizer(chunk, max_length=100, min_length=30, do_sample=False)
-
-        # Extract the summary text
-        summary_text = summary[0]['summary_text']
-
-        # Add the summary to our list of summaries
+        # summary_text = summary[0]['summary_text']
+        summary_text = summary[0]['generated_text']
         summaries.append(summary_text)
 
-    # Join the summaries back together into a single summary
     final_summary = ' '.join(summaries)
 
     print('--------------',final_summary,'------------------')
@@ -90,9 +79,7 @@ def format_quiz_questions(quiz_questions):
                 'question': line,
                 'choices': []
             }
-        # If the line is a choice
         elif re.match(r'(\$?[a-d]\))', line):
-            # Add the choice to the current question
             question['choices'].append(line)
 
     if question:
@@ -120,8 +107,6 @@ def generate_quiz(request):
                 {"role": "user", "content": "Generate 10 quiz questions based on the text with multiple choices and add '$' at begining of correct choice."},
             ]
         )
-
-        # The assistant's reply
         quiz_questions = response['choices'][0]['message']['content']
         quiz_data = format_quiz_questions(quiz_questions)   
         return JsonResponse(quiz_data, safe=False)
