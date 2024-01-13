@@ -7,7 +7,7 @@ export const theme = (mode) =>
             background: {
                 default: mode === "dark" ? "#0B090A" : "#fff",
                 paper: mode === "dark" ? "#0B090A" : "#fff",
-                contrast: mode === "dark" ? "#161A1D" : "#E5383B",
+                contrast: mode === "dark" ? "#161A1D" : "#e2e8f0",
             },
             text: {
                 primary: mode === "dark" ? "#fff" : "#212121",
@@ -15,7 +15,7 @@ export const theme = (mode) =>
                 disabled: "rgba(255, 255, 255, 0.5)",
             },
             primary: {
-                main: "#A4161A  ",
+                main: "#A4161A",
                 light: "#fca5a5",
                 dark: "#660708",
                 contrastText: "#fff",
