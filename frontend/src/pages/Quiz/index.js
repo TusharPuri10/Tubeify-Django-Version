@@ -146,7 +146,7 @@ const Quiz = () => {
             {
                 showquiz ?
                 <Box sx={{mt:"20px"}}>
-                    <Questions questions={ques} />
+                    <Questions questions={questions} />
                 </Box>
                 :
                 <Box sx={{display: "flex", flexDirection:"column",justifyContent:"center", alignItems:"center", width:"60%",borderRadius:"10px", marginTop:"20px"}}>
