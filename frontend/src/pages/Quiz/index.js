@@ -108,6 +108,12 @@ const Quiz = () => {
         setLink(event.target.value);
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleButtonClick();
+        }
+    };
+
     const fetchQuestions = async () => {
         try {
             setloading(true);
@@ -134,6 +140,7 @@ const Quiz = () => {
                     label="Paste your link here" 
                     value={link} 
                     onChange={handleLinkChange} 
+                    onKeyDown={handleKeyDown}
                     sx={{width:"80%"}}
                 />
                 <Button 
