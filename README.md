@@ -1,106 +1,68 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+# Tubeify - YouTube Summarization and Quiz Tool
 
-# Django + Vercel
+Tubeify is a web application built using React.js and Django that provides a convenient way to summarize YouTube videos and generate quizzes based on their content. The application utilizes a custom fine-tuned model for video summarization and integrates with the OpenAI API for quiz generation.
 
-This example shows how to use Django 4 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
+## Features
 
-## Demo
+- **Video Summarization:** Tubeify uses a proprietary fine-tuned model to generate concise summaries of YouTube videos, making it easier for users to grasp the main ideas without watching the entire video.
 
-https://django-template.vercel.app/
+- **Quiz Generation:** The application leverages the OpenAI API to create quizzes related to the content of the summarized videos. This feature enhances user engagement and provides an interactive learning experience.
 
-## How it Works
+- **User-Friendly Interface:** Tubeify offers an intuitive and user-friendly interface for a seamless experience. Users can easily input YouTube video URLs, receive summaries, and access generated quizzes.
 
-Our Django application, `example` is configured as an installed application in `vercel_app/settings.py`:
+## Technologies Used
 
-```python
-# vercel_app/settings.py
-INSTALLED_APPS = [
-    # ...
-    'example',
-]
+- **React.js:** A JavaScript library for building user interfaces. Tubeify's frontend is developed using React to provide a responsive and dynamic user experience.
+
+- **Django:** A high-level Python web framework that enables rapid development and clean, pragmatic design. Tubeify's backend is built with Django to handle video summarization and quiz generation.
+
+- **Custom Fine-Tuned Model:** Tubeify employs a proprietary machine learning model fine-tuned specifically for video summarization. 
+([Model](https://huggingface.co/tusharpuri10/Flan_t5_podcast_summary_assessment))
+
+- **OpenAI API:** The OpenAI API is utilized for generating quizzes based on the content of the summarized videos.
+
+## Getting Started
+
+1. Clone the repository:
+``` bash
+git clone https://github.com/your-username/tubeify.git
+cd tubeify
 ```
 
-We allow "\*.vercel.app" subdomains in `ALLOWED_HOSTS`, in addition to 127.0.0.1:
 
-```python
-# vercel_app/settings.py
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+2. Install dependencies for the frontend and backend:
+``` bash
+# Install frontend dependencies
+cd frontend
+npm install
+
+# Install backend dependencies
+cd ../backend
+pip install -r requirements.txt
 ```
+3. Run the development server:
+``` bash
+# Run frontend development server
+cd ../frontend
+npm start
 
-The `wsgi` module must use a public variable named `app` to expose the WSGI application:
-
-```python
-# vercel_app/wsgi.py
-app = get_wsgi_application()
-```
-
-The corresponding `WSGI_APPLICATION` setting is configured to use the `app` variable from the `vercel_app.wsgi` module:
-
-```python
-# vercel_app/settings.py
-WSGI_APPLICATION = 'vercel_app.wsgi.app'
-```
-
-There is a single view which renders the current time in `example/views.py`:
-
-```python
-# example/views.py
-from datetime import datetime
-
-from django.http import HttpResponse
-
-
-def index(request):
-    now = datetime.now()
-    html = f'''
-    <html>
-        <body>
-            <h1>Hello from Vercel!</h1>
-            <p>The current time is { now }.</p>
-        </body>
-    </html>
-    '''
-    return HttpResponse(html)
-```
-
-This view is exposed a URL through `example/urls.py`:
-
-```python
-# example/urls.py
-from django.urls import path
-
-from example.views import index
-
-
-urlpatterns = [
-    path('', index),
-]
-```
-
-Finally, it's made accessible to the Django server inside `vercel_app/urls.py`:
-
-```python
-# vercel_app/urls.py
-from django.urls import path, include
-
-urlpatterns = [
-    ...
-    path('', include('example.urls')),
-]
-```
-
-This example uses the Web Server Gateway Interface (WSGI) with Django to enable handling requests on Vercel with Serverless Functions.
-
-## Running Locally
-
-```bash
+# Run backend development server
+cd ../backend
 python manage.py runserver
 ```
+3. Open your browser and navigate to http://localhost:3000 to access Tubeify.
 
-Your Django application is now available at `http://localhost:8000`.
+Usage
+* Input a YouTube video URL on the Tubeify homepage.
+* Click the "Summarize" button to generate a summary of the video.
+* Explore the summary and click on the "Generate Quiz" button to create a quiz based on the video content.
+* Answer the quiz questions and enhance your understanding of the video.
 
-## One-Click Deploy
+Contributing
+Contributions are welcome! Please follow the guidelines outlined in CONTRIBUTING.md.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+License
+This project is licensed under the MIT License.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+Acknowledgments
+Special thanks to the OpenAI team for providing the powerful API used in Tubeify.
