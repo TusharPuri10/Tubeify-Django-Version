@@ -46,8 +46,10 @@ def generate_summary(request):
     # tokenizer = AutoTokenizer.from_pretrained('stevhliu/my_awesome_billsum_model')
     # summarizer = pipeline("summarization", model='stevhliu/my_awesome_billsum_model', tokenizer=tokenizer)
     tokenizer = AutoTokenizer.from_pretrained('tusharpuri10/Flan_t5_podcast_summary_assessment')
+    tokenizer.model_max_length=4096
     summarizer = pipeline("summarization", model='tusharpuri10/Flan_t5_podcast_summary_assessment', tokenizer=tokenizer)
     chunk_size = 200 
+    summary = summarizer(transcript_text, max_length=100, min_length=30, do_sample=True)
 
     print("transcrpt text: ", transcript_text)
     words = transcript_text.split()
