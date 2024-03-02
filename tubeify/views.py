@@ -3,7 +3,6 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 import re
-from youtube_transcript_api import YouTubeTranscriptApi
 from transformers import pipeline, AutoTokenizer
 import torch
 import torchaudio
@@ -17,56 +16,19 @@ from django.views.decorators.csrf import csrf_exempt
 def say_hello(request):
     return JsonResponse({'message': 'Hello from Django!'})
 
-
-def generate_transcript_text(youtube_url="https://www.youtube.com/watch?v=b9rs8yzpGYk"):
-    match = re.search(r"v=([A-Za-z0-9_-]+)", youtube_url)
-    if match:
-        video_id = match.group(1)
-    else:
-        raise ValueError("Invalid YouTube URL")
-    
-    transcript = YouTubeTranscriptApi.get_transcript(video_id)
-
-    transcript_text = ""
-    for segment in transcript:
-        transcript_text += segment["text"] + " "
-    return transcript_text
-
-
-def split_text_into_chunks(text, max_chunk_size):
-    return textwrap.wrap(text, max_chunk_size)
-
 @csrf_exempt
 @api_view(['GET','POST'])
 def generate_summary(request):
     data = json.loads(request.body)
-    ytlink = data.get('ytlink')
-    print("YouTube link:", ytlink)
-    transcript_text = generate_transcript_text(ytlink)
-    # tokenizer = AutoTokenizer.from_pretrained('stevhliu/my_awesome_billsum_model')
-    # summarizer = pipeline("summarization", model='stevhliu/my_awesome_billsum_model', tokenizer=tokenizer)
+    transcript_text = data.get('transcript')
+    print(transcript_text)
     tokenizer = AutoTokenizer.from_pretrained('tusharpuri10/Flan_t5_podcast_summary_assessment')
     tokenizer.model_max_length=4096
     summarizer = pipeline("summarization", model='tusharpuri10/Flan_t5_podcast_summary_assessment', tokenizer=tokenizer)
-    chunk_size = 200 
-    summary = summarizer(transcript_text, max_length=100, min_length=30, do_sample=True)
-
-    print("transcrpt text: ", transcript_text)
-    words = transcript_text.split()
-    chunks = [' '.join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
-
-    summaries = []
-    for chunk in chunks:
-        summary = summarizer(chunk, max_length=100, min_length=30, do_sample=False)
-        print(summary,"<><><><><<><><><><")
-        summary_text = summary[0]['summary_text']
-        # summary_text = summary[0]['generated_text']
-        summaries.append(summary_text)
-
-    final_summary = ' '.join(summaries)
-
-    print('--------------',final_summary,'------------------')
-    return JsonResponse({'message': final_summary})
+    summary = summarizer(transcript_text, max_length=100, min_length=60, do_sample=True)
+    summary_text = summary[0]['summary_text']
+    print("summary:", summary_text)
+    return JsonResponse({'message': summary_text})
 
 def format_quiz_questions(quiz_questions):
     lines = quiz_questions.split("\n")
