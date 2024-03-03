@@ -19,8 +19,6 @@ Tubeify is a web application built using React.js and Django that provides a con
 - **Custom Fine-Tuned Model:** Tubeify employs a proprietary machine learning model fine-tuned specifically for video summarization. 
 ([Model](https://huggingface.co/tusharpuri10/Flan_t5_podcast_summary_assessment))
 
-- **OpenAI API:** The OpenAI API is utilized for generating quizzes based on the content of the summarized videos.
-
 ## Getting Started
 
 1. Clone the repository:
@@ -44,7 +42,7 @@ pip install -r requirements.txt
 ``` bash
 # Run frontend development server
 cd ../frontend
-npm start
+npm run dev
 
 # Run backend development server
 cd ../backend
@@ -54,15 +52,10 @@ python manage.py runserver
 
 Usage
 * Input a YouTube video URL on the Tubeify homepage.
-* Click the "Summarize" button to generate a summary of the video.
-* Explore the summary and click on the "Generate Quiz" button to create a quiz based on the video content.
-* Answer the quiz questions and enhance your understanding of the video.
+* Click the "Generate" button to generate a summary of the video.
 
 Contributing
-Contributions are welcome! Please follow the guidelines outlined in CONTRIBUTING.md.
+Contributions are welcome!
 
 License
 This project is licensed under the MIT License.
-
-Acknowledgments
-Special thanks to the OpenAI team for providing the powerful API used in Tubeify.
