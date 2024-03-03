@@ -28,7 +28,7 @@ const SummaryScrollArea = ({ summaries }: Props) => {
                         <Card className="w-[400px] my-6" key={index}>
                             <CardTitle className="mt-4 ml-4">Summary: {summary.timestamp}</CardTitle>
                             <CardContent className="p-6">
-                                <Typewriter key={key} text={summary.text} speed={2} onFinished={() =>{
+                                <Typewriter key={key} text={summary.text} speed={10} onFinished={() =>{
                                     console.log(currentIndex)
                                     setCurrentIndex(currentIndex + 1)
                                 }} />

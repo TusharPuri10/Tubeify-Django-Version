@@ -24,33 +24,43 @@ export default function Home() {
   const [summaries, setSummaries] = useState<{ timestamp: string, text: string }[]>([]);
   const [chunks, setChunks] = useState<number>(5);
 
-  const fetchTranscript = () => {
-    axios.get(`/api/transcript?url=${url}`).then((response) => {
+  const fetchSummary = async (text: string) => {
+    try {
+      const res = await axios.post("http://127.0.0.1:8000/api/generate_summary/", { transcript: text });
+      if (!overlay) setOverlay(true);
+      return res.data.summary;
+    } catch (err) {
+      console.error(err);
+      return ""; // Return empty string if there's an error
+    }
+  };
+  
+  const fetchTranscript = async () => {
+    try {
+      const response = await axios.get(`/api/transcript?url=${url}`);
       console.log(response.data);
       let startTime = 0;
       let endTime = 0;
       let transcript = "";
-      const summaries = [];
-
+  
       for (let i = 0; i < response.data.length; i++) {
         transcript += response.data[i].text + " ";
         endTime = response.data[i].offset + response.data[i].duration;
-
+  
         if (endTime - startTime >= chunks * 60 * 1000 || i === response.data.length - 1) {
           // If duration exceeds 15 minutes or it's the last segment
           const timestamp = formatTimestamp(startTime) + " - " + formatTimestamp(endTime);
-          summaries.push({ timestamp, text: transcript.trim() });
+          const summary = await fetchSummary(transcript.trim());
+          setSummaries(prevSummaries => [...prevSummaries, { timestamp, text: summary }]); // Update state correctly
           transcript = "";
-          startTime = endTime; // Update startTime for next group
+          startTime = endTime; // Update startTime for next group;
         }
       }
-
-      setSummaries(summaries);
-      setOverlay(true);
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-
+  
   // Helper function to format milliseconds to timestamp (hh:mm:ss)
   const formatTimestamp = (milliseconds: number): string => {
     const totalSeconds = Math.floor(milliseconds / 1000);
@@ -59,8 +69,6 @@ export default function Home() {
     const seconds = totalSeconds % 60;
     return `${hours}:${minutes}:${seconds}`;
   };
-
-
 
   const container = {
     hidden: { opacity: 0 },

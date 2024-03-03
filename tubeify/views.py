@@ -21,14 +21,16 @@ def say_hello(request):
 def generate_summary(request):
     data = json.loads(request.body)
     transcript_text = data.get('transcript')
-    print(transcript_text)
+    print("transcript text:" ,transcript_text)
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n")
     tokenizer = AutoTokenizer.from_pretrained('tusharpuri10/Flan_t5_podcast_summary_assessment')
     tokenizer.model_max_length=4096
     summarizer = pipeline("summarization", model='tusharpuri10/Flan_t5_podcast_summary_assessment', tokenizer=tokenizer)
     summary = summarizer(transcript_text, max_length=100, min_length=60, do_sample=True)
     summary_text = summary[0]['summary_text']
     print("summary:", summary_text)
-    return JsonResponse({'message': summary_text})
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n")
+    return JsonResponse({'summary': summary_text})
 
 def format_quiz_questions(quiz_questions):
     lines = quiz_questions.split("\n")
