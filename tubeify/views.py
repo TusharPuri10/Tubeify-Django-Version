@@ -11,6 +11,7 @@ import textwrap
 from transformers import pipeline
 import json
 from django.views.decorators.csrf import csrf_exempt
+import html
 
 @api_view(['GET'])
 def say_hello(request):
@@ -21,16 +22,33 @@ def say_hello(request):
 def generate_summary(request):
     data = json.loads(request.body)
     transcript_text = data.get('transcript')
+    transcript_text = transcript_text.replace('\n', ' ')
+    transcript_text = transcript_text.replace('\r', ' ')
+    transcript_text = transcript_text.replace('  ', ' ')
+    transcript_text = transcript_text.replace('...', '. ')
+    transcript_text = html.unescape(transcript_text)
     print("transcript text:" ,transcript_text)
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n")
     tokenizer = AutoTokenizer.from_pretrained('tusharpuri10/Flan_t5_podcast_summary_assessment')
-    tokenizer.model_max_length=4096
     summarizer = pipeline("summarization", model='tusharpuri10/Flan_t5_podcast_summary_assessment', tokenizer=tokenizer)
-    summary = summarizer(transcript_text, max_length=100, min_length=60, do_sample=True)
-    summary_text = summary[0]['summary_text']
-    print("summary:", summary_text)
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n")
-    return JsonResponse({'summary': summary_text})
+    chunk_size = 200 
+
+    print("transcrpt text: ", transcript_text)
+    words = transcript_text.split()
+    chunks = [' '.join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
+
+    summaries = []
+    for chunk in chunks:
+        summary = summarizer(chunk, max_length=100, min_length=30, do_sample=False)
+        print(summary,"<><><><><<><><><><")
+        summary_text = summary[0]['summary_text']
+        # summary_text = summary[0]['generated_text']
+        summaries.append(summary_text)
+
+    final_summary = ' '.join(summaries)
+
+    print('--------------',final_summary,'------------------')
+    return JsonResponse({'summary': final_summary})
 
 def format_quiz_questions(quiz_questions):
     lines = quiz_questions.split("\n")

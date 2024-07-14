@@ -28,7 +28,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.158.0",
-    "youtube-transcript": "^1.0.6"
+    "youtube-transcript": "^1.2.1"
   },
   "devDependencies": {
     "@types/node": "^20",
