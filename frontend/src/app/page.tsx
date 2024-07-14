@@ -30,9 +30,9 @@ export default function Home() {
 			console.log(tokens.length);
 			console.log(tokens.slice(0, 2000).length);
 			const updatedText = tokens.slice(0, 2000).join(" ");
-			const res = await axios.post('/api/summary/', { transcript: updatedText });
-			if (!overlay) setOverlay(true);
-			return res.data.summary;
+			const res = await axios.post("http://127.0.0.1:8000/api/generate_summary/", { transcript: text });
+      if (!overlay) setOverlay(true);
+      return res.data.summary;
 		} catch (err) {
 			toast('Something went wrong', {
 				description: 'Oops! It seems like open ai API Key is expired now.',
